@@ -63,6 +63,10 @@ namespace WinDurango.UI.Controls
             _ = App.MainWindow.AppsListPage.InitAppListAsync();
         }
 
+        private void XboxInfo(object sender, RoutedEventArgs e)
+        {
+            //add a dialog that shows xbox info from the package
+        }
         private void OpenFolder(object sender, RoutedEventArgs e)
         {
             Logger.WriteDebug($"Opening app installation folder {_package.InstalledPath}");
