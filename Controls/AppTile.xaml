@@ -8,9 +8,14 @@
     mc:Ignorable="d"
     Margin="10, 10, 10, 10"
     >
-    <Button Width="320" Height="180" Padding="0" x:Name="startButton" CornerRadius="5, 5, 0, 0" BorderThickness="0" Background="{ThemeResource SystemControlAltLowAcrylicElementBrush}" >
-        <Image x:Name="appLogo"/>
-    </Button>
+    <Canvas Width="320" Height="180">
+        <Button Padding="0" x:Name="startButton" Width="320" Height="180" Canvas.ZIndex="0">
+            <Image x:Name="appLogo" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+        </Button>
+        <Button x:Name="showXboxInfo" Click="XboxInfo" ToolTipService.ToolTip="View xbox info" Canvas.Left="265" Canvas.Top="10" Canvas.ZIndex="1">
+            <SymbolIcon Symbol="XboxOneConsole"></SymbolIcon>
+        </Button>
+    </Canvas>
     <Expander CornerRadius="0, 0, 5, 5" Width="320" Name="infoExpander" Background="{ThemeResource DesktopAcrylicTransparentBrush}">
         <Grid Name="expanderControls" Width="320">
             <Grid.RowDefinitions>
