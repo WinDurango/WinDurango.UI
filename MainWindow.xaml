@@ -23,11 +23,18 @@
 
             <Grid x:Name="TitleBar" Grid.Column="1">
                 <Image VerticalAlignment="Center" HorizontalAlignment="Left" Width="16" Height="16" Margin="16 0 0 0" Source="ms-appx:///Assets/icon.png" />
-                <TextBlock 
-                    Text="WinDurango" 
-                    Style="{StaticResource CaptionTextBlockStyle}" 
-                    VerticalAlignment="Center" 
-                    Margin="48,0,0,0"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="48,0,0,0">
+                    <TextBlock 
+                        Text="WinDurango" 
+                        Style="{StaticResource CaptionTextBlockStyle}" 
+                        VerticalAlignment="Center"/>
+                    <TextBlock 
+                        Name="controllerIndicator"
+                        Text="🎮" 
+                        Style="{StaticResource CaptionTextBlockStyle}" 
+                        VerticalAlignment="Center"
+                        Visibility="Collapsed"/>
+                </StackPanel>
             </Grid>
         </Grid>
         <NavigationView 
@@ -42,13 +49,18 @@
                 <NavigationViewItem Icon="AllApps" Content="Home" Tag="AppsListPage" IsSelected="True"/>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
+                <NavigationViewItem Content="Check for Updates" Tag="CheckUpdates">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE895;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem Content="About" Tag="AboutPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE946;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
-            <Frame x:Name="contentFrame"/>
+            <Frame x:Name="contentFrame" x:FieldModifier="public"/>
         </NavigationView>
     </Grid>
 </Window>

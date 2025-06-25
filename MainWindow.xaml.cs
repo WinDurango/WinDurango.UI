@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WinDurango.UI.Dialogs;
 using WinDurango.UI.Pages;
 using WinDurango.UI.Settings;
@@ -41,6 +42,13 @@ namespace WinDurango.UI
             else if (args.InvokedItemContainer is NavigationViewItem item)
             {
                 string tag = item.Tag.ToString();
+                
+                if (tag == "CheckUpdates")
+                {
+                    _ = CheckForUpdatesAsync();
+                    return;
+                }
+                
                 Type pageType = tag switch
                 {
                     "AppsListPage" => typeof(AppsListPage),
@@ -100,6 +108,12 @@ namespace WinDurango.UI
 
             contentFrame.Navigate(typeof(AppsListPage));
             AppsListPage = (AppsListPage)contentFrame.Content;
+            
+            // Controller init
+            ControllerManager.Instance.Initialize(this);
+            
+            // Check for updates on startup
+            _ = CheckForUpdatesAsync();
         }
 
         private async void appTitleBar_Loaded(object sender, RoutedEventArgs e)
@@ -152,6 +166,7 @@ namespace WinDurango.UI
         {
             currentMode = mode;
             navView.PaneDisplayMode = currentMode == AppMode.CONTROLLER ? NavigationViewPaneDisplayMode.Top : NavigationViewPaneDisplayMode.LeftCompact;
+            controllerIndicator.Visibility = currentMode == AppMode.CONTROLLER ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void SetupTitleBar()
@@ -160,6 +175,29 @@ namespace WinDurango.UI
             double scaleAdjustment = appTitleBar.XamlRoot.RasterizationScale;
             rightPaddingColumn.Width = new GridLength(titleBar.RightInset / scaleAdjustment);
             leftPaddingColumn.Width = new GridLength(titleBar.LeftInset / scaleAdjustment);
+        }
+
+        private async Task CheckForUpdatesAsync()
+        {
+            try
+            {
+                var release = await UpdateManager.CheckForUpdatesAsync();
+                if (release != null)
+                {
+                    var dialog = new Confirmation(
+                        $"Update {release.tag_name} is available!\n\n{release.body}\n\nWould you like to download and install it?",
+                        "Update Available");
+                    
+                    if (await dialog.Show() == Dialog.BtnClicked.Yes)
+                    {
+                        await UpdateManager.DownloadAndInstallUpdateAsync(release);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteException($"Update check failed: {ex.Message}");
+            }
         }
     }
 }
