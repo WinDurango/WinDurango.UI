@@ -26,7 +26,7 @@ namespace WinDurango.UI.Pages
                 LoadLocalContributors();
                 
                 // Now load from Github
-                var githubContributors = await GitHubContributorManager.GetAllContributorsAsync();
+                var githubContributors = await GitHubContributorManager.GetUIContributorsAsync();
                 if (githubContributors.Count > 0)
                 {
                     contributorList.Children.Clear();

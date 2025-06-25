@@ -23,14 +23,14 @@
 
             <Grid x:Name="TitleBar" Grid.Column="1">
                 <Image VerticalAlignment="Center" HorizontalAlignment="Left" Width="16" Height="16" Margin="16 0 0 0" Source="ms-appx:///Assets/icon.png" />
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="48,0,0,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="48,0,48,0">
                     <TextBlock 
                         Text="WinDurango" 
                         Style="{StaticResource CaptionTextBlockStyle}" 
                         VerticalAlignment="Center"/>
                     <TextBlock 
                         Name="controllerIndicator"
-                        Text="🎮" 
+                        Text=" 🎮" 
                         Style="{StaticResource CaptionTextBlockStyle}" 
                         VerticalAlignment="Center"
                         Visibility="Collapsed"/>
@@ -44,16 +44,12 @@
             IsPaneOpen="false"
             IsBackButtonVisible="Collapsed"
             ItemInvoked="NavigationInvoked"
-            x:Name="navView">
+            x:Name="navView"
+            x:FieldModifier="public">
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="AllApps" Content="Home" Tag="AppsListPage" IsSelected="True"/>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Content="Check for Updates" Tag="CheckUpdates">
-                    <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE895;" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
                 <NavigationViewItem Content="About" Tag="AboutPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE946;" />

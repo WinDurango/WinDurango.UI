@@ -22,41 +22,16 @@ namespace WinDurango.UI.Utils
             public string type { get; set; }
         }
 
-        public static async Task<List<GitHubContributor>> GetAllContributorsAsync()
+        public static async Task<List<GitHubContributor>> GetUIContributorsAsync()
         {
-            var allContributors = new Dictionary<string, GitHubContributor>();
-
             try
             {
                 httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("WinDurango-UI");
-
-                // Get UI repo contributoras
-                var uiContributors = await GetContributorsFromRepo(UI_REPO_API);
-                foreach (var contributor in uiContributors)
-                {
-                    allContributors[contributor.login] = contributor;
-                }
-
-                // Get normal repo contributors
-                var coreContributors = await GetContributorsFromRepo(CORE_REPO_API);
-                foreach (var contributor in coreContributors)
-                {
-                    if (allContributors.ContainsKey(contributor.login))
-                    {
-                        // Combine counts
-                        allContributors[contributor.login].contributions += contributor.contributions;
-                    }
-                    else
-                    {
-                        allContributors[contributor.login] = contributor;
-                    }
-                }
-
-                var result = new List<GitHubContributor>(allContributors.Values);
-                result.Sort((a, b) => b.contributions.CompareTo(a.contributions)); // sort descensing by # of contributions
+                var contributors = await GetContributorsFromRepo(UI_REPO_API);
+                contributors.Sort((a, b) => b.contributions.CompareTo(a.contributions));
                 
-                Logger.WriteInformation($"Retrieved {result.Count} contributors from GitHub");
-                return result;
+                Logger.WriteInformation($"Retrieved {contributors.Count} UI contributors from GitHub");
+                return contributors;
             }
             catch (Exception ex)
             {

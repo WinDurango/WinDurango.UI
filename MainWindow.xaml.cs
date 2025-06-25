@@ -43,11 +43,7 @@ namespace WinDurango.UI
             {
                 string tag = item.Tag.ToString();
                 
-                if (tag == "CheckUpdates")
-                {
-                    _ = CheckForUpdatesAsync();
-                    return;
-                }
+
                 
                 Type pageType = tag switch
                 {
@@ -165,7 +161,8 @@ namespace WinDurango.UI
         public void SwitchMode(AppMode mode)
         {
             currentMode = mode;
-            navView.PaneDisplayMode = currentMode == AppMode.CONTROLLER ? NavigationViewPaneDisplayMode.Top : NavigationViewPaneDisplayMode.LeftCompact;
+            navView.PaneDisplayMode = NavigationViewPaneDisplayMode.LeftCompact;
+            navView.IsPaneOpen = currentMode == AppMode.CONTROLLER;
             controllerIndicator.Visibility = currentMode == AppMode.CONTROLLER ? Visibility.Visible : Visibility.Collapsed;
         }
 
