@@ -18,8 +18,8 @@ For building you'll need Visual Studio 2022 with the following:
  - [X] Mod Manager
  - [X] Scan for already installed EraOS/XUWP stuff
  - [X] Allow for any existing installed package to be added to the applist
- - [ ] Built in updater 
- - [ ] Controller support 
+ - [X] Built in updater 
+ - [X] Controller support 
  - [ ] Setup program (maybe MSIX?)
  - [ ] Fitting place for extra xbox-specific info
  - [ ] Resize content to fit to screen
@@ -30,7 +30,7 @@ For building you'll need Visual Studio 2022 with the following:
  - [X] Fix UI load speed when loading a lot of packages on startup
  - [X] Applist scrolling
  - [X] Fix icon in the titlebar
- - [ ] Repo contributors on the about screen
+ - [X] Repo contributors on the about screen
  - [ ] Get Fluent Thin working
  - [ ] Use InfoBar for many progress related things (such as registering package, etc) 
  - [ ] Add versioning to the InstalledPackages json (as in versioning the JSON file itself)
