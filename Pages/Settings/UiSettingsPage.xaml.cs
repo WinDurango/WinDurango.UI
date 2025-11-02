@@ -3,7 +3,10 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+using WinDurango.UI.Dialogs;
 using WinDurango.UI.Settings;
+using WinDurango.UI.Utils;
 
 
 namespace WinDurango.UI.Pages.Settings
@@ -110,6 +113,35 @@ namespace WinDurango.UI.Pages.Settings
             {
                 App.Settings.Set("AppViewIsHorizontalScrolling", toggleSwitch.IsOn);
                 App.MainWindow.AppsListPage.SwitchScrollDirection(toggleSwitch.IsOn);
+            }
+        }
+
+        private async void CheckForUpdates(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var release = await UpdateManager.CheckForUpdatesAsync();
+                if (release != null)
+                {
+                    var dialog = new Confirmation(
+                        $"Update {release.tag_name} is available!\n\n{release.body}\n\nWould you like to download and install it?",
+                        "Update Available");
+                    
+                    if (await dialog.Show() == Dialogs.Dialog.BtnClicked.Yes)
+                    {
+                        await UpdateManager.DownloadAndInstallUpdateAsync(release);
+                    }
+                }
+                else
+                {
+                    var noUpdateDialog = new NoticeDialog("You are already running the latest version.", "No Updates Available");
+                    await noUpdateDialog.ShowAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorDialog = new NoticeDialog($"Failed to check for updates: {ex.Message}", "Update Check Failed");
+                await errorDialog.ShowAsync();
             }
         }
     }

@@ -40,6 +40,7 @@
             <TextBlock Margin="0 5 0 5" Text="Other"/>
             <ToggleSwitch OnContent="Enable debug logging" OffContent="Enable debug logging"  Toggled="OnDebugLogToggled" Name="DebugLogToggle" Loaded="OnDebugLogToggleLoaded"/>
             <Button Name="appdataButton" Margin="0 5 0 5" Click="OpenAppData">Open WinDurango AppData folder</Button>
+            <Button Name="updateButton" Margin="0 5 0 5" Click="CheckForUpdates">Check for Updates</Button>
         </StackPanel>
     </ScrollView>
 </Page>
